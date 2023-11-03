@@ -1,0 +1,31 @@
+﻿@page "/detailsdiary/{id:int}"
+@inject ProjectDiaries.Client.Services.IDiaryService DiaryService
+
+@if (CurrentDiary is null)
+{
+    <span>Getting that blog post from the service...</span>
+}
+else
+{
+    <div class="post-img" style="background-image: url('@(CurrentDiary.Image ?? placeholderImage)');" />
+
+    <h3>@CurrentDiary.Title</h3>
+
+    <div>
+        @CurrentDiary.Content
+    </div>
+}
+
+@code {
+    private ProjectDiaries.Shared.Diary? CurrentDiary;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    string placeholderImage = "https://via.placeholder.com/1060x300";
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentDiary = await DiaryService.GetDiaryById(Id);
+    }
+}
