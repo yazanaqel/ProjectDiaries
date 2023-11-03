@@ -1,0 +1,33 @@
+﻿@page "/create"
+@inherits CreateDiaryBase
+
+<PageTitle>Create a Diary</PageTitle>
+<h3>Create a New Diary</h3>
+
+<EditForm Model="@newDiary" OnValidSubmit="HandleSubmit">
+
+	<DataAnnotationsValidator />
+	<div class="form-group">
+		<label for="title">Title</label>
+		<InputText id="title" @bind-Value="newDiary.Title" class="form-control" />
+		<ValidationMessage For="@(() => newDiary.Title)" />
+	</div>
+	<div class="form-control-file">
+		<label for="image">Image</label>
+		<InputFile OnChange="OnFileChange" />
+	</div>
+	<div class="form-group">
+		<label for="description">Description</label>
+		<InputText id="description" @bind-Value="newDiary.Description" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="content">Content</label>
+		<InputTextArea id="content" @bind-Value="newDiary.Content" class="form-control" />
+	</div>
+
+
+	<button type="submit" class="btn btn-primary">Save</button>
+	<ValidationSummary />
+
+</EditForm>
+

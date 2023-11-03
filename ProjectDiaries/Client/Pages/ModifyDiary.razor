@@ -1,0 +1,83 @@
+﻿@page "/modify/{id:int}"
+@inject ProjectDiaries.Client.Services.IDiaryService DiaryService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit @modifyDiary.Title</PageTitle>
+<h3>Edit @modifyDiary.Title</h3>
+
+<EditForm Model="@modifyDiary" OnValidSubmit="HandleSubmit">
+
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText id="title" @bind-Value="modifyDiary.Title" class="form-control" />
+        <ValidationMessage For="@(() => modifyDiary.Title)" />
+    </div>
+    <div class="form-control-file">
+        <label for="image">Image</label>
+        <InputFile OnChange="OnFileChange" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <InputText id="description" @bind-Value="modifyDiary.Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <InputTextArea id="content" @bind-Value="modifyDiary.Content" class="form-control" />
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Save</button> |
+    <button @onclick="()=>DeleteDiary(Id)" class="btn btn-danger">Delete</button> |
+    <a href="/" class="btn btn-secondary">Cancel</a>
+    <ValidationSummary />
+
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    ProjectDiaries.Shared.Diary modifyDiary = new ProjectDiaries.Shared.Diary();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var result = await DiaryService.GetDiaryById(Id);
+
+        if (result is not null)
+        {
+            modifyDiary = result;
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        await DiaryService.EditDiary(modifyDiary);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/.png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 1060, 1060);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        modifyDiary.Image = imageData;
+    }
+
+    private async Task DeleteDiary(int id)
+    {
+        // bool isConfirmed = await JsRuntime.Confirm("Are you sure?");
+
+        // if (isConfirmed)
+        // {
+        // 	await DiaryService.DeleteDiary(id);
+        // }
+        await DiaryService.DeleteDiary(0);
+
+        NavigationManager.NavigateTo("/");
+    }
+}
