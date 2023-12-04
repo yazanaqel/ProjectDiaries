@@ -31,7 +31,7 @@ public class DiaryService : IDiaryService
         await _http.PutAsJsonAsync($"api/Diaries/{request.Id}", request);
     }
 
-    public async Task<List<Diary>> GetDiaries()
+	public async Task<List<Diary>> GetDiaries()
 	{
 
 		return await _http.GetFromJsonAsync<List<Diary>>("api/Diaries");

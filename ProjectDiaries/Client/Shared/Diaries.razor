@@ -13,20 +13,20 @@
 else
 {
 
-	@foreach (var diary in AllDiaries)
-	{
-		<div class="card my-4">
-			<div class="card-img" style="background-image: url('@(diary.Image ?? placeholderImage)');"></div>
-			<div class="card-body">
-				<h5 class="card-title">@diary.Title</h5>
-				<p class="card-text">@diary.Description</p>
-				<p class="card-text"><small class="text-muted">@diary.DateCreated.ToLongDateString()</small></p>
-				<a href="/detailsdiary/@diary.Id" class="btn btn-primary">Read more...</a>
+@foreach (var diary in AllDiaries)
+{
+    <div class="card my-4">
+        <div class="card-img" style="background-image: url('@(diary.Image ?? placeholderImage)');"></div>
+        <div class="card-body">
+            <h5 class="card-title">@diary.Title</h5>
+            <p class="card-text">@diary.Description</p>
+            <p class="card-text"><small class="text-muted">@diary.DateCreated.ToLongDateString()</small></p>
+            <a href="/detailsdiary/@diary.Id" class="btn btn-primary">Read more...</a>
 
 				<button @onclick="()=>EditDiary(diary.Id)" class="btn btn-secondary">Edit</button>
-			</div>
-		</div>
-	}
+        </div>
+    </div>
+}
 }
 
 
@@ -34,12 +34,12 @@ else
 
 	private List<Diary> AllDiaries = new List<Diary>();
 
-	string placeholderImage = "https://via.placeholder.com/1060x180";
+    string placeholderImage = "https://via.placeholder.com/1060x180";
 
-	protected override async Task OnInitializedAsync()
-	{
-		AllDiaries = await DiaryService.GetDiaries();
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        AllDiaries = await DiaryService.GetDiaries();
+    }
 
 	private void EditDiary(int id)
 	{
