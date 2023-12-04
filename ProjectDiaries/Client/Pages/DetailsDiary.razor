@@ -1,4 +1,5 @@
 ﻿@page "/detailsdiary/{id:int}"
+@inject ProjectDiaries.Client.Services.IDiaryService DiaryService
 
 @if (CurrentDiary is null)
 {
@@ -20,3 +21,16 @@ else
     </div>
 }
 
+@code {
+    private ProjectDiaries.Shared.Diary? CurrentDiary;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    string placeholderImage = "https://via.placeholder.com/1060x300";
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentDiary = await DiaryService.GetDiaryById(Id);
+    }
+}

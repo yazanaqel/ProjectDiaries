@@ -25,10 +25,10 @@ namespace ProjectDiaries.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Diary>>> GetDiaries()
         {
-            if (_context.Diaries == null)
-            {
-                return NotFound();
-            }
+          if (_context.Diaries == null)
+          {
+              return NotFound();
+          }
             return await _context.Diaries.OrderByDescending(x => x.DateCreated).ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace ProjectDiaries.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Diary>> GetDiary(int id)
         {
-            if (_context.Diaries == null)
-            {
-                return NotFound();
-            }
+          if (_context.Diaries == null)
+          {
+              return NotFound();
+          }
             var diary = await _context.Diaries.FindAsync(id);
 
             if (diary == null)
@@ -86,10 +86,10 @@ namespace ProjectDiaries.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Diary>> PostDiary(Diary diary)
         {
-            if (_context.Diaries == null)
-            {
-                return Problem("Entity set 'DataContext.Diaries'  is null.");
-            }
+          if (_context.Diaries == null)
+          {
+              return Problem("Entity set 'DataContext.Diaries'  is null.");
+          }
             _context.Diaries.Add(diary);
             await _context.SaveChangesAsync();
 

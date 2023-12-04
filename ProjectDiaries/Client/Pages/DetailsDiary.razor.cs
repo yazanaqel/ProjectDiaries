@@ -5,18 +5,18 @@ namespace ProjectDiaries.Client.Pages;
 
 public partial class DetailsDiary
 {
-	[Inject]
-	public IDiaryService DiaryService { get; set; }
+	//[Inject]
+	//public IDiaryService DiaryService { get; set; }
 
-	private ProjectDiaries.Shared.Diary CurrentDiary;
+	//private ProjectDiaries.Shared.Diary CurrentDiary;
 
-	[Parameter]
-	public int Id { get; set; }
+	//[Parameter]
+	//public int Id { get; set; }
 
-	string placeholderImage = "https://via.placeholder.com/1060x300";
+	//string placeholderImage = "https://via.placeholder.com/1060x300";
 
-	protected override async Task OnInitializedAsync()
-	{
-		CurrentDiary = await DiaryService.GetDiaryById(Id);
-	}
+	//protected override async Task OnInitializedAsync()
+	//{
+	//	CurrentDiary = await DiaryService.GetDiaryById(Id);
+	//}
 }
